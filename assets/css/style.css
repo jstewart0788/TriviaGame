@@ -5,6 +5,7 @@ body
 	text-align: center;
 	font-family: 'Questrial', sans-serif;
 	font-size: 4em;
+	cursor: default;
 }
 
 .title
