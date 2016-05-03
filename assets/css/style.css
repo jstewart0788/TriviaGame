@@ -1,9 +1,38 @@
 
 body
 {
-	background-image: url("../images/background2.jpg");
+	background-image: url("../images/ignasi_pattern_s.png");
 	text-align: center;
-	background-repeat: no-repeat;
-	background-size: cover;
+	font-family: 'Questrial', sans-serif;
+	font-size: 4em;
+}
 
+.title
+{
+	font-family: 'Patrick Hand SC', cursive;
+	font-weight: 900;
+	font-size: 3em;
+	background: url("../images/pinstriped_suit.png");
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+#question
+{
+	font-size: 1.5em;
+}
+
+.answer:hover
+{
+	background: url("../images/pinstriped_suit.png");
+	color: white;
+}
+
+.answer:active
+{
+	background: url("../images/pinstriped_suit.png");
+	color: white;
+    border-style: solid;
+    border-width: 5px;
+    border-color: white;
 }
