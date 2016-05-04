@@ -1,7 +1,7 @@
 window.onload = function(){
 	$(".answer").on("click", function(){
 		game.selectedAnswer = $(this).text();
-		game.progress();
+		game.reveal();
 	});
 };
 
@@ -14,32 +14,38 @@ var game = {
 	{
 		question:"1) What word, that relates to art and architecture, can describe elaborate churches from the Middle Ages, or grotesque, medieval fiction?",
 		answers:["Art Deco", "Surrealism", "Gothic", "Expressionism"],
-		correctAnswerIndex: 2
+		correctAnswerIndex: 2,
+		gifImage:"assets/images/gothic.gif"
 	},
 	{
 		question:"2) Whose art style became known as Surrealism?",
 		answers:["Francisco de Goya", "Edgar Degas", "Peter Paul Rubens", "Salvador Dali"],
-		correctAnswerIndex:3
+		correctAnswerIndex:3,
+		gifImage:"assets/images/dali.gif"
 	},
 	{
 		question:"3) How many paintings did Vincent Van Gogh sell in his lifetime?",
 		answers:["1","3","5","7"],
-		correctAnswerIndex:0
+		correctAnswerIndex:0,
+		gifImage:"assets/images/vangogh.gif"
 	},
 	{
 		question:"4) Pop Art originated in which city?",
 		answers:["Amsterdam","New York","Frankfurt","London"],
-		correctAnswerIndex:3
+		correctAnswerIndex:3,
+		gifImage:"assets/images/popart.gif"
 	},
 	{
 		question:"5) How many times has the Mona Lisa been stolen?",
 		answers:["8","10","1","5"],
-		correctAnswerIndex:2
+		correctAnswerIndex:2,
+		gifImage:"assets/images/monalisa.gif"
 	},
 	{
 		question:"6) Leonardi Da Vinci invented which one of these items?",
 		answers:["Kites","High heels","Gunpowder","Wine cork"],
-		correctAnswerIndex:1
+		correctAnswerIndex:1,
+		gifImage:"assets/images/davinci.gif"
 	}],
 	numberOfQuestions:6,
 	counter: "",
@@ -61,30 +67,10 @@ var game = {
 			$("#answer2").text(game.questions[game.state].answers[1]);
 			$("#answer3").text(game.questions[game.state].answers[2]);
 			$("#answer4").text(game.questions[game.state].answers[3]);
-			if(game.questions[game.state - 1].answers[game.questions[game.state - 1].correctAnswerIndex] == game.selectedAnswer )
-			{
-				if(game.state > 1)
-					game.correctAnswers++;
-			}
-			else if(game.selectedAnswer != "")
-			{
-				if(game.state > 1)
-					game.incorrectAnswers++;
-			}
 
 		}
-		else if (game.state == 7) 
+		else
 		{
-			if(game.questions[game.state - 1].answers[game.questions[game.state - 1].correctAnswerIndex] == game.selectedAnswer )
-			{
-				if(game.state > 1)
-					game.correctAnswers++;
-			}
-			else if(game.selectedAnswer != "")
-			{
-				if(game.state > 1)
-					game.incorrectAnswers++;
-			}
 			$("#timeRemaining").empty();
 			$("#question").html('All done, here\'s how you did!<br><h3>Correct Answers: ' + game.correctAnswers+ '<br>Incorrect Answers: '+ game.incorrectAnswers +'<br>Unanswered: ' + game.unanswered + '</h3>');
 			$("#answer1").text("Start Over?");
@@ -106,13 +92,47 @@ var game = {
 		$("#timeRemaining").text("Time Remaining: " + game.timeRemaining + " seconds");
 		if (game.timeRemaining == 0)
 		 {
-		 	game.unanswered++;
 		 	game.selectedAnswer = "";
-		 	game.progress();
+		 	game.reveal();
 		 }
 	},
 	resetTimer:function(){
-		clearInterval(game.counter);
 		game.timeRemaining = 30;
+	},
+	reveal:function(){
+		if(game.state > 0)
+		{
+			if(game.questions[game.state].answers[game.questions[game.state].correctAnswerIndex] == game.selectedAnswer )
+			{
+				game.correctAnswers++;
+				$("#question").html('Correct!<br><br><br><img src="'+ game.questions[game.state].gifImage +'">');
+				$("#answer1").empty();
+				$("#answer2").empty();
+				$("#answer3").empty();
+				$("#answer4").empty();
+			}
+			else if(game.selectedAnswer == "")
+			{
+				game.unanswered++;
+				$("#question").html('Out of Time!<br><br><h3>The correct answer was: ' + game.questions[game.state].answers[game.questions[game.state].correctAnswerIndex] +'</h3><br><img src="'+ game.questions[game.state].gifImage +'">');
+				$("#answer1").empty();
+				$("#answer2").empty();
+				$("#answer3").empty();
+				$("#answer4").empty();			
+			}
+			else
+			{
+				game.incorrectAnswers++;
+				$("#question").html('Nope!<br><br><h3>The correct answer was: ' + game.questions[game.state].answers[game.questions[game.state].correctAnswerIndex]+'</h3><br><img src="'+ game.questions[game.state].gifImage +'">');
+				$("#answer1").empty();
+				$("#answer2").empty();
+				$("#answer3").empty();
+				$("#answer4").empty();			
+			}
+			clearInterval(game.counter);
+			setTimeout(game.progress, 4000);
+		}
+		else
+			game.progress();
 	}
 };

@@ -39,3 +39,7 @@ body
     border-width: 5px;
     border-color: white;
 }
+img
+{
+	max-height: 250px;
+}
